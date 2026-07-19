@@ -43,6 +43,7 @@ def query_index(index, jobs: list[dict], resume_text: str, top_k: int = 5) -> li
             "title": job["title"],
             "company": job["company"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
             "score": round(float(score), 4),
         })
