@@ -40,10 +40,10 @@ this shape:
   ],
   "education": [
     {{"degree": "string", "institution": "string", "year": "string"}}
-  ]
+  ],
   "projects": [
     {{"title": "string", "description": "string", "link": "string"}}
-  ],
+  ]
 }}
 
 If a field is not present in the resume, use an empty string or empty list.
