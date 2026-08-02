@@ -5,7 +5,7 @@ import SearchPanel from "./components/SearchPanel";
 import ResultsSection from "./components/ResultsSection";
 import SuggestionsPanel from "./components/SuggestionsPanel";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 function App() {
   const [resumeFilename, setResumeFilename] = useState(null);
