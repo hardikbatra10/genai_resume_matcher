@@ -45,11 +45,11 @@ this shape:
   "experience": [
     {{"title": "string", "company": "string", "duration": "string"}}
   ],
-  "projects": [
-    {{"title": "string", "description": "string", "link": "string"}}
-  ],
   "education": [
     {{"degree": "string", "institution": "string", "year": "string"}}
+  ],
+  "projects": [
+    {{"title": "string", "description": "string", "link": "string"}}
   ]
 }}
 
@@ -63,7 +63,7 @@ Text:
 # rest of the function stays exactly the same
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-3.5-flash-lite",
         contents=prompt,
     )
     raw_reply = response.text
