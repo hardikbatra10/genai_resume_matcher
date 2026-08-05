@@ -31,23 +31,6 @@ function App() {
 
     setUploading(true);
     setUploadError(null);
-<<<<<<< Updated upstream
-
-    const response = await fetch(`${API_BASE}/upload-resume`, {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-
-    if (!data.is_resume) {
-      setUploadError(data.error);
-      setResumeFilename(null);
-      setStructuredData(null);
-    } else {
-      setUploadError(null);
-      setResumeFilename(data.filename);
-      setStructuredData(data.structured_data);
-=======
     try {
       const response = await fetch(`${API_BASE}/upload-resume`, {
         method: "POST",
@@ -67,7 +50,6 @@ function App() {
       setUploadError("Couldn't upload that resume. Please try again.");
     } finally {
       setUploading(false);
->>>>>>> Stashed changes
     }
     setUploading(false);
   }
