@@ -20,12 +20,10 @@ function App() {
 
   const [activeJob, setActiveJob] = useState(null);
   const [suggestions, setSuggestions] = useState("");
-  const [panelOpen, setPanelOpen] = useState(false);
   const [suggestionsLoading, setSuggestionsLoading] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
 
   async function handleFileSelect(file) {
-    if (!file) return;
-
     const formData = new FormData();
     formData.append("file", file);
 
@@ -51,7 +49,6 @@ function App() {
     } finally {
       setUploading(false);
     }
-    setUploading(false);
   }
 
   async function handleSearch() {
@@ -96,18 +93,12 @@ function App() {
   const activeStep = resumeFilename ? (hasSearched ? 2 : 1) : 0;
 
   return (
-    <div className="min-h-screen bg-ink-50">
+    <div className="flex min-h-screen flex-col bg-ink-50">
       <Header activeStep={activeStep} />
 
-<<<<<<< Updated upstream
-      <main>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:items-start">
-          <div className="space-y-5 lg:sticky lg:top-24">
-=======
       <main className="mx-auto flex w-full max-w-6xl flex-1 items-center px-6 py-10 md:px-10">
         <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:items-stretch">
           <div className="space-y-5 lg:sticky lg:top-24 lg:self-start">
->>>>>>> Stashed changes
             <UploadZone
               resumeFilename={resumeFilename}
               structuredData={structuredData}
@@ -129,8 +120,8 @@ function App() {
             hasSearched={hasSearched}
             searching={searching}
             matches={matches}
-            activeJobTitle={panelOpen ? activeJob?.url : null}
-            suggestionsLoadingTitle={suggestionsLoading ? activeJob?.url : null}
+            activeJobUrl={panelOpen ? activeJob?.url : null}
+            suggestionsLoadingUrl={suggestionsLoading ? activeJob?.url : null}
             onGetSuggestions={handleGetSuggestions}
           />
         </div>
