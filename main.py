@@ -30,8 +30,16 @@ async def upload_resume(file: UploadFile = File(...)):
     resume_text = extract_text_from_pdf(save_path)
     structured = extract_resume_fields(resume_text)
 
+    if not structured.get("is_resume", False):
+        return {
+            "filename": file.filename,
+            "is_resume": False,
+            "error": "This doesn't look like a resume. Please upload a valid resume PDF.",
+        }
+
     return {
         "filename": file.filename,
+        "is_resume": True,
         "structured_data": structured,
     }
 

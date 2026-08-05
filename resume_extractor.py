@@ -27,32 +27,40 @@ def extract_links_from_pdf(pdf_path: str) -> list[str]:
     return links
 
 def extract_resume_fields(resume_text: str) -> dict:
-    prompt = f"""Extract structured information from the resume text below.
+    prompt = f"""Extract structured information from the text below.
+
+First, determine whether this text is actually a resume/CV. A resume 
+typically contains sections like skills, work experience, and education. 
+If it is clearly NOT a resume (e.g. it's an invoice, a story, an article, 
+random text, a different type of document), set "is_resume" to false and 
+leave the other fields empty.
 
 Return ONLY valid JSON, with no extra text before or after it, in exactly
 this shape:
 
 {{
+  "is_resume": true or false,
   "name": "string",
   "skills": ["string", "string"],
   "experience": [
     {{"title": "string", "company": "string", "duration": "string"}}
   ],
-  "education": [
-    {{"degree": "string", "institution": "string", "year": "string"}}
-  ]
   "projects": [
     {{"title": "string", "description": "string", "link": "string"}}
   ],
+  "education": [
+    {{"degree": "string", "institution": "string", "year": "string"}}
+  ]
 }}
 
 If a field is not present in the resume, use an empty string or empty list.
 
-Resume text:
+Text:
 ---
 {resume_text}
 ---
 """
+# rest of the function stays exactly the same
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
