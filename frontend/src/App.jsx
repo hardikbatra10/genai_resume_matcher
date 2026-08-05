@@ -8,23 +8,31 @@ function App() {
   const [matches, setMatches] = useState([]);
   const [suggestions, setSuggestions] = useState("");
   const [loading, setLoading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   async function handleUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+  const formData = new FormData();
+  formData.append("file", file);
 
-    setLoading(true);
-    const response = await fetch(`${API_BASE}/upload-resume`, {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
+  setLoading(true);
+  const response = await fetch(`${API_BASE}/upload-resume`, {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+
+  if (!data.is_resume) {
+    setUploadError(data.error);
+    setResumeFilename(null);
+  } else {
+    setUploadError(null);
     setResumeFilename(data.filename);
-    setLoading(false);
   }
+  setLoading(false);
+}
 
   async function handleSearch() {
     if (!resumeFilename || !searchQuery) return;
@@ -68,6 +76,7 @@ function App() {
         <h2>1. Upload your resume</h2>
         <input type="file" accept=".pdf" onChange={handleUpload} />
         {resumeFilename && <p>Uploaded: {resumeFilename}</p>}
+        {uploadError && <p style={{ color: "red" }}>{uploadError}</p>}
       </section>
 
       <section>
