@@ -20,28 +20,34 @@ function App() {
 
   const [activeJob, setActiveJob] = useState(null);
   const [suggestions, setSuggestions] = useState("");
-  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
 
   async function handleFileSelect(file) {
+    if (!file) return;
+
     const formData = new FormData();
     formData.append("file", file);
 
     setUploading(true);
     setUploadError(null);
-    try {
-      const response = await fetch(`${API_BASE}/upload-resume`, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
+
+    const response = await fetch(`${API_BASE}/upload-resume`, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+
+    if (!data.is_resume) {
+      setUploadError(data.error);
+      setResumeFilename(null);
+      setStructuredData(null);
+    } else {
+      setUploadError(null);
       setResumeFilename(data.filename);
       setStructuredData(data.structured_data);
-    } catch {
-      setUploadError("Couldn't upload that resume. Please try again.");
-    } finally {
-      setUploading(false);
     }
+    setUploading(false);
   }
 
   async function handleSearch() {
@@ -89,17 +95,7 @@ function App() {
     <div className="min-h-screen bg-ink-50">
       <Header activeStep={activeStep} />
 
-      <main className="mx-auto max-w-6xl px-6 py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight text-ink-950 sm:text-3xl">
-            Find your best-fit roles
-          </h1>
-          <p className="mt-1.5 max-w-xl text-sm text-ink-500">
-            Upload your resume, search open roles, and get AI-ranked matches with tailored edit
-            suggestions for each one.
-          </p>
-        </div>
-
+      <main>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:items-start">
           <div className="space-y-5 lg:sticky lg:top-24">
             <UploadZone
