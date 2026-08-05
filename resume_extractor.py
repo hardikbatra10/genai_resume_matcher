@@ -91,7 +91,7 @@ if __name__ == "__main__":
     text = extract_text_from_pdf(pdf_path)
     links = extract_links_from_pdf(pdf_path)
 
-    if links:
+    if links:       
         text += "\n\nLinks found in this document are:\n" + "\n".join(links)
 
     if not text.strip():

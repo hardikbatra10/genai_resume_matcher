@@ -31,6 +31,7 @@ function App() {
 
     setUploading(true);
     setUploadError(null);
+<<<<<<< Updated upstream
 
     const response = await fetch(`${API_BASE}/upload-resume`, {
       method: "POST",
@@ -46,6 +47,27 @@ function App() {
       setUploadError(null);
       setResumeFilename(data.filename);
       setStructuredData(data.structured_data);
+=======
+    try {
+      const response = await fetch(`${API_BASE}/upload-resume`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (!data.is_resume) {
+        setUploadError(data.error || "That doesn't look like a resume. Please upload a valid resume PDF.");
+        setResumeFilename(null);
+        setStructuredData(null);
+      } else {
+        setResumeFilename(data.filename);
+        setStructuredData(data.structured_data);
+      }
+    } catch {
+      setUploadError("Couldn't upload that resume. Please try again.");
+    } finally {
+      setUploading(false);
+>>>>>>> Stashed changes
     }
     setUploading(false);
   }
@@ -95,9 +117,15 @@ function App() {
     <div className="min-h-screen bg-ink-50">
       <Header activeStep={activeStep} />
 
+<<<<<<< Updated upstream
       <main>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:items-start">
           <div className="space-y-5 lg:sticky lg:top-24">
+=======
+      <main className="mx-auto flex w-full max-w-6xl flex-1 items-center px-6 py-10 md:px-10">
+        <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:items-stretch">
+          <div className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+>>>>>>> Stashed changes
             <UploadZone
               resumeFilename={resumeFilename}
               structuredData={structuredData}
@@ -119,8 +147,8 @@ function App() {
             hasSearched={hasSearched}
             searching={searching}
             matches={matches}
-            activeJobTitle={panelOpen ? activeJob?.title : null}
-            suggestionsLoadingTitle={suggestionsLoading ? activeJob?.title : null}
+            activeJobTitle={panelOpen ? activeJob?.url : null}
+            suggestionsLoadingTitle={suggestionsLoading ? activeJob?.url : null}
             onGetSuggestions={handleGetSuggestions}
           />
         </div>

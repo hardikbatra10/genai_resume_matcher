@@ -19,9 +19,9 @@ function JobCardSkeleton() {
 
 function EmptyState({ icon: Icon, title, subtitle }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-ink-200 bg-white/60 px-6 py-16 text-center">
+    <div className="flex h-full min-h-[420px] flex-col items-center justify-center rounded-2xl border border-dashed border-ink-200 bg-white/60 px-6 py-16 text-center">
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-ink-100">
-        <Icon className="h-5.5 w-5.5 text-ink-400" />
+        <Icon className="h-6 w-6 text-ink-400" />
       </div>
       <p className="text-sm font-semibold text-ink-800">{title}</p>
       <p className="mt-1 max-w-sm text-sm text-ink-400">{subtitle}</p>
@@ -34,8 +34,8 @@ export default function ResultsSection({
   hasSearched,
   searching,
   matches,
-  activeJobTitle,
-  suggestionsLoadingTitle,
+  activeJobUrl,
+  suggestionsLoadingUrl,
   onGetSuggestions,
 }) {
   if (searching) {
@@ -85,8 +85,8 @@ export default function ResultsSection({
         <JobCard
           key={`${job.title}-${job.company}-${i}`}
           job={job}
-          isActive={activeJobTitle === job.title}
-          isLoadingSuggestions={suggestionsLoadingTitle === job.title}
+          isActive={activeJobUrl === job.url}
+          isLoadingSuggestions={suggestionsLoadingUrl === job.url}
           onGetSuggestions={onGetSuggestions}
         />
       ))}
